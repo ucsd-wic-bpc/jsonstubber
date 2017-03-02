@@ -131,7 +131,7 @@ class JavaJSONStubber(JSONStubber):
             return self.make_array(argnum, argument_name, argument_type)
 
     def get_convert_output_to_string(self, return_type):
-        if isinstance(return_type, JSONTypes.BOOL):
+        if return_type == JSONTypes.BOOL:
             return 'String output_str = output ? "True" : "False";'
         else:
             return "String output_str = output;"

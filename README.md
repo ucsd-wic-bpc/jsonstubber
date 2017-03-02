@@ -1,11 +1,11 @@
 jsonstubber
 ===========
 A Python library used to generate stubcode which parses JSON using 
-[https://github.com/ucsd-wic-bpc/jsonFASTParse](jsonFASTParse) and sends the
+[jsonFASTParse](https://github.com/ucsd-wic-bpc/jsonFASTParse) and sends the
 parsed JSON to to-be-implemented method.
 
 This is a standalone project, but is primarily being developed to be used in
-[https://github.com/ucsd-wic-bpc/PyCFramework](PyCFramework) to generate templates.
+[PyCFramework](https://github.com/ucsd-wic-bpc/PyCFramework) to generate templates.
 
 Supported Languages
 --------------------

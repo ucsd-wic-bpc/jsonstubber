@@ -1,0 +1,3 @@
+[submodule "jsonfastparse"]
+	path = jsonfastparse
+	url = https://github.com/ucsd-wic-bpc/jsonfastparse

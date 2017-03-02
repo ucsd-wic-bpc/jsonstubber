@@ -1,3 +1,6 @@
 [submodule "jsonfastparse"]
 	path = jsonfastparse
 	url = https://github.com/ucsd-wic-bpc/jsonfastparse
+[submodule "unifiedstr"]
+	path = unifiedstr
+	url = https://github.com/ucsd-wic-bpc/unifiedstr

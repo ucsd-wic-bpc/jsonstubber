@@ -4,21 +4,22 @@ import glob
 class JavaJSONStubber(JSONStubber):
 
     def make_file_without_body(self, class_name):
-        import_lines, jsonfast = self.make_jsonfastparse_lines()
+        import_lines, support = self.make_supportfile_lines()
         class_line = "public class {} {{".format(class_name)
         end_class_line = "}"
         header = "{}\n{}".format("".join(import_lines), class_line)
-        footer = "{}\n{}".format(end_class_line, "".join(jsonfast))
+        footer = "{}\n{}".format(end_class_line, "".join(support))
 
         return StubSection(header=header, footer=footer)
 
-    def make_jsonfastparse_lines(self):
+    def make_supportfile_lines(self):
         # First, let's gather the chunk of text from JSONFastParse
         import_lines = []
         lines = []
         files = glob.glob("jsonfastparse/Java/*.java")
-        for jsonfastparse_file in files:
-            with open(jsonfastparse_file, 'r') as f:
+        files += glob.glob("unifiedstr/Java/*.java")
+        for support_file in files:
+            with open(support_file, 'r') as f:
                 line = f.readline()
                 while line:
                     if line.startswith("import "):
@@ -27,7 +28,10 @@ class JavaJSONStubber(JSONStubber):
                         lines.append(line)
                     line = f.readline()
 
-        import_lines.append("import java.util.Scanner;")
+        import_lines += [
+            "import java.util.Scanner;",
+        ]
+
         return import_lines, lines
 
     def get_default_return(self, stubtype):
@@ -130,19 +134,12 @@ class JavaJSONStubber(JSONStubber):
         else:
             return self.make_array(argnum, argument_name, argument_type)
 
-    def get_convert_output_to_string(self, return_type):
-        if return_type == JSONTypes.BOOL:
-            return 'String output_str = output ? "True" : "False";'
-        else:
-            return "String output_str = output;"
-
     def make_process_output(self, return_type, method_name, arguments):
         lang_ret_type = self.convert_to_language_type(return_type)
         lines = [
             "{} output = {}({});".format(lang_ret_type, method_name, ", ".join(arguments))
         ]
 
-        lines.append(self.get_convert_output_to_string(return_type))
-        lines.append("System.out.println(output_str);");
+        lines.append("System.out.println(Unifiedstr.toString(output));");
 
         return TextStubSection("\n".join(lines))

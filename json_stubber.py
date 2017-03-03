@@ -47,17 +47,22 @@ class JSONStubber(object):
 
 class StubSection(object):
 
-    def __init__(self, child_sections=None, header=None, footer=None):
+    def __init__(self, child_sections=None, header=None, footer=None, tabs=0):
         self.child_sections = child_sections or []
-        self.header = header or TextStubSection("")
-        self.footer = footer or TextStubSection("")
+        self.header = header or ""
+        self.footer = footer or ""
+        self.tabs = 0
 
     def append_child(self, child):
         self.child_sections.append(child)
 
     def make(self):
+        tabs = "\t" * self.tabs
         children_str = "\n".join([child.make() for child in self.child_sections])
-        return "{}\n{}\n{}".format(self.header, children_str, self.footer)
+        tabbed_children_str = "".join([tabs + "\t" + text for text in children_str.splitlines(True)])
+        tabbed_header_str = "".join([tabs + text for text in self.header.splitlines(True)])
+        tabbed_footer_str = "".join([tabs + text for text in self.footer.splitlines(True)])
+        return "{}\n{}\n{}".format(tabbed_header_str, tabbed_children_str, tabbed_footer_str)
 
 class TextStubSection(object):
     def __init__(self, text):

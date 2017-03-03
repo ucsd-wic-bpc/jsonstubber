@@ -7,7 +7,7 @@ class JavaJSONStubber(JSONStubber):
         import_lines, support = self.make_supportfile_lines()
         class_line = "public class {} {{".format(class_name)
         end_class_line = "}"
-        header = "{}\n{}".format("".join(import_lines), class_line)
+        header = "{}\n{}\n".format("".join(import_lines), class_line)
         footer = "{}\n{}".format(end_class_line, "".join(support))
 
         return StubSection(header=header, footer=footer)
@@ -29,7 +29,7 @@ class JavaJSONStubber(JSONStubber):
                     line = f.readline()
 
         import_lines += [
-            "import java.util.Scanner;",
+            "import java.util.Scanner;\n",
         ]
 
         return import_lines, lines
@@ -63,15 +63,15 @@ class JavaJSONStubber(JSONStubber):
             "return {};".format(self.get_default_return(return_type))
         ]
         body = TextStubSection("\n".join(body_lines))
-        footer = "}"
+        footer = "}\n"
 
-        return StubSection(header=header, child_sections=[body], footer=footer)
+        return StubSection(header=header, child_sections=[body], footer=footer, tabs=1)
 
     def make_main_without_body(self):
         header = "public static void main(String[] args) {"
         footer = "}"
 
-        return StubSection(header=header, footer=footer)
+        return StubSection(header=header, footer=footer, tabs=1)
 
     def make_parse_input(self):
         lines = ["String input = new Scanner(System.in).nextLine();",
@@ -89,18 +89,19 @@ class JavaJSONStubber(JSONStubber):
         lines = self.make_array_wrapper(argnum, "argList", argument_name, arrtype)
         return TextStubSection("\n".join(lines))
 
-    def make_array_wrapper(self, argnum, base_list, argument_name, arrtype):
+    def make_array_wrapper(self, argnum, base_list, argument_name, arrtype, tab_count=0):
         lang_type = self.convert_to_language_type(arrtype)
+        tabs = "\t" * tab_count
         if not isinstance(arrtype, JSONContainer):
             return "{}.getItem({}).castTo{}()".format(base_list, argnum, lang_type.title())
 
         jsonlist_name = "{}jsonlist".format(argument_name)
         it_index = "i{}".format(arrtype.degree)
         lines = [
-            "JSONList {} = (JSONList) {}.getItem({});".format(jsonlist_name, base_list, argnum),
-            "{} {} = {};".format(lang_type, argument_name, 
+            "{}JSONList {} = (JSONList) {}.getItem({});".format(tabs, jsonlist_name, base_list, argnum),
+            "{}{} {} = {};".format(tabs,lang_type, argument_name, 
                                 self.make_new_array_str(arrtype, "{}.getEntryCount()".format(jsonlist_name))),
-            "for (int {0} = 0; {0} < {1}.length; {0}++) {{".format(it_index, argument_name)
+            "{0}for (int {1} = 0; {1} < {2}.length; {1}++) {{".format(tabs, it_index, argument_name)
         ]
 
         subtype = arrtype.subtype
@@ -109,12 +110,12 @@ class JavaJSONStubber(JSONStubber):
             assign_str = "{}.getItem({}).castTo{}()".format(jsonlist_name, it_index, lang_subtype)
         else:
             new_argname = "{}{}".format(argument_name, arrtype.degree)
-            lines += self.make_array_wrapper(it_index, jsonlist_name, new_argname, subtype)
+            lines += self.make_array_wrapper(it_index, jsonlist_name, new_argname, subtype, tab_count=tab_count+1)
             assign_str = new_argname
 
         lines += [
-            "{}[{}] = {};".format(argument_name, it_index, assign_str),
-            "}"
+            "{}{}[{}] = {};".format(tabs + "\t", argument_name, it_index, assign_str),
+            "{}}}".format(tabs)
         ]
 
         return lines

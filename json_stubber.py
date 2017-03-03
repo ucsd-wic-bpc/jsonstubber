@@ -88,6 +88,12 @@ class JSONType(object):
         self.description = description
         JSONType.types[description] = self
 
+    def __eq__(self, other):
+        return self.description == other.description
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     @classmethod
     def parse(cls, s):
         return cls.types[s]

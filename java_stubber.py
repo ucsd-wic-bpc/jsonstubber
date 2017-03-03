@@ -1,7 +1,15 @@
-from json_stubber import JSONStubber, StubSection, TextStubSection, JSONTypes, JSONType, JSONContainer
+from .json_stubber import JSONStubber, StubSection, TextStubSection, JSONTypes, JSONType, JSONContainer
 import glob
+import os
 
 class JavaJSONStubber(JSONStubber):
+
+    def __init__(self,
+                 jsonfastparse_path='jsonfastparse',
+                 unifiedstr_path='unifiedstr'):
+
+        self.jsonfastparse_path = jsonfastparse_path
+        self.unifiedstr_path = unifiedstr_path
 
     def make_file_without_body(self, class_name):
         import_lines, support = self.make_supportfile_lines()
@@ -16,8 +24,8 @@ class JavaJSONStubber(JSONStubber):
         # First, let's gather the chunk of text from JSONFastParse
         import_lines = []
         lines = []
-        files = glob.glob("jsonfastparse/Java/*.java")
-        files += glob.glob("unifiedstr/Java/*.java")
+        files = glob.glob(os.path.join(self.jsonfastparse_path, 'Java/*.java'))
+        files += glob.glob(os.path.join(self.unifiedstr_path, "Java/*.java"))
         for support_file in files:
             with open(support_file, 'r') as f:
                 line = f.readline()
@@ -141,6 +149,9 @@ class JavaJSONStubber(JSONStubber):
             "{} output = {}({});".format(lang_ret_type, method_name, ", ".join(arguments))
         ]
 
-        lines.append("System.out.println(Unifiedstr.toString(output));");
+        if isinstance(return_type, JSONContainer):
+            lines.append("System.out.println(Unifiedstr.deepToString(output));");
+        else:
+            lines.append("System.out.println(Unifiedstr.toString(output));");
 
         return TextStubSection("\n".join(lines))

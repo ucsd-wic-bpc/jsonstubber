@@ -1,8 +1,14 @@
 class JSONStubber(object):
 
-    def make_stub(self, class_name, method_name, return_type, arguments):
+    def make_stub(self, class_name, method_name, return_type, arguments,
+                  user_impl_header="", user_impl_footer=""):
+
         file_section = self.make_file_without_body(class_name)
+
         userimpl_section = self.make_userimpl_section(method_name, return_type, arguments)
+        userimpl_section.header = user_impl_header + '\n' + userimpl_section.header
+        userimpl_section.footer += '\n' + user_impl_footer
+
         main = self.make_main(return_type, method_name, arguments)
 
         file_section.append_child(userimpl_section)

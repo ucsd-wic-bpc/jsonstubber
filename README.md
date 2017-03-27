@@ -10,6 +10,7 @@ This is a standalone project, but is primarily being developed to be used in
 Supported Languages
 --------------------
 * Java
+* C++
 
 Usage
 -----

@@ -1,4 +1,4 @@
-from .json_stubber import JSONStubber, StubSection, TextStubSection, JSONTypes, JSONType, JSONContainer
+from json_stubber import JSONStubber, StubSection, TextStubSection, JSONTypes, JSONType, JSONContainer
 import glob
 import os
 
@@ -145,8 +145,9 @@ class JavaJSONStubber(JSONStubber):
 
     def make_process_output(self, return_type, method_name, arguments):
         lang_ret_type = self.convert_to_language_type(return_type)
+        argument_names = [argname for (argname, argtype) in arguments]
         lines = [
-            "{} output = {}({});".format(lang_ret_type, method_name, ", ".join(arguments))
+            "{} output = {}({});".format(lang_ret_type, method_name, ", ".join(argument_names))
         ]
 
         if isinstance(return_type, JSONContainer):

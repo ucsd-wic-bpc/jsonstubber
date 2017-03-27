@@ -30,8 +30,7 @@ class JSONStubber(object):
             argument_name, argument_type = argument
             main.append_child(self.make_arg_process(argnum, argument_name, argument_type))
 
-        argument_names = [argument_name for (argument_name, argument_type) in arguments]
-        main.append_child(self.make_process_output(return_type, method_name, argument_names))
+        main.append_child(self.make_process_output(return_type, method_name, arguments))
 
         return main
 

@@ -262,13 +262,13 @@ class CppJSONStubber(JSONStubber):
                                              "_dim{}".format(str(dim))))
 
 
-        output_str = "{{}} = {}({});".format(method_name, ", ".join(argument_list))
+        output_str = "{{}} output = {}({});".format(method_name, ", ".join(argument_list))
 
         if isinstance(return_type, JSONContainer):
-            lines = [output_str.format("struct result userResult")]
+            lines = [output_str.format("struct result")]
             base_type = self.get_container_base_type(return_type)
-            lengths = ["userResult.dimension{}Length".format(str(dim)) for dim in range(1, return_type.degree+1)]
-            lines.append("std::cout << Unifiedstr::deep_to_string<{}>((void*)userResult.array, {}, {}) << std::endl;"
+            lengths = ["output.dimension{}Length".format(str(dim)) for dim in range(1, return_type.degree+1)]
+            lines.append("std::cout << Unifiedstr::deep_to_string<{}>((void*)output.array, {}, {}) << std::endl;"
                          .format(base_type, return_type.degree, ", ".join(lengths)))
 
         else:

@@ -11,6 +11,7 @@ Supported Languages
 --------------------
 * Java
 * C++
+* Python
 
 Usage
 -----

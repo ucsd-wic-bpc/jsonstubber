@@ -73,13 +73,13 @@ class JavaJSONStubber(JSONStubber):
         body = TextStubSection("\n".join(body_lines))
         footer = "}\n"
 
-        return StubSection(header=header, child_sections=[body], footer=footer, tabs=1)
+        return StubSection(header=header, child_sections=[body], footer=footer, tabs=0)
 
     def make_main_without_body(self):
         header = "public static void main(String[] args) {"
         footer = "}"
 
-        return StubSection(header=header, footer=footer, tabs=1)
+        return StubSection(header=header, footer=footer)
 
     def make_parse_input(self):
         lines = ["String input = new Scanner(System.in).nextLine();",

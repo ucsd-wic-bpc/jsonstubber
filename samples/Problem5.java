@@ -7,65 +7,60 @@ import java.util.Scanner;
 
 public class Problem5 {
 
-	
-	public static int[][][] arrayTest(int[][][][] Arg1, int[][] Arg2, int[][] Arg3) {
-		//TODO
-		return new int[][][]{};
-	
-	}
-	
-	
-	public static void main(String[] args) {
-		String input = new Scanner(System.in).nextLine();
-		JSONList argList = (JSONList) JSONParser.getObjectFromString(input);
-		
-		JSONList Arg1jsonlist = (JSONList) argList.getItem(0);
-		int[][][][] Arg1 = new int[Arg1jsonlist.getEntryCount()][][][];
-		for (int i4 = 0; i4 < Arg1.length; i4++) {
-			JSONList Arg14jsonlist = (JSONList) Arg1jsonlist.getItem(i4);
-			int[][][] Arg14 = new int[Arg14jsonlist.getEntryCount()][][];
-			for (int i3 = 0; i3 < Arg14.length; i3++) {
-				JSONList Arg143jsonlist = (JSONList) Arg14jsonlist.getItem(i3);
-				int[][] Arg143 = new int[Arg143jsonlist.getEntryCount()][];
-				for (int i2 = 0; i2 < Arg143.length; i2++) {
-					JSONList Arg1432jsonlist = (JSONList) Arg143jsonlist.getItem(i2);
-					int[] Arg1432 = new int[Arg1432jsonlist.getEntryCount()];
-					for (int i1 = 0; i1 < Arg1432.length; i1++) {
-						Arg1432[i1] = Arg1432jsonlist.getItem(i1).castToInt();
-					}
-					Arg143[i2] = Arg1432;
-				}
-				Arg14[i3] = Arg143;
-			}
-			Arg1[i4] = Arg14;
-		}
-		
-		JSONList Arg2jsonlist = (JSONList) argList.getItem(1);
-		int[][] Arg2 = new int[Arg2jsonlist.getEntryCount()][];
-		for (int i2 = 0; i2 < Arg2.length; i2++) {
-			JSONList Arg22jsonlist = (JSONList) Arg2jsonlist.getItem(i2);
-			int[] Arg22 = new int[Arg22jsonlist.getEntryCount()];
-			for (int i1 = 0; i1 < Arg22.length; i1++) {
-				Arg22[i1] = Arg22jsonlist.getItem(i1).castToInt();
-			}
-			Arg2[i2] = Arg22;
-		}
-		
-		JSONList Arg3jsonlist = (JSONList) argList.getItem(2);
-		int[][] Arg3 = new int[Arg3jsonlist.getEntryCount()][];
-		for (int i2 = 0; i2 < Arg3.length; i2++) {
-			JSONList Arg32jsonlist = (JSONList) Arg3jsonlist.getItem(i2);
-			int[] Arg32 = new int[Arg32jsonlist.getEntryCount()];
-			for (int i1 = 0; i1 < Arg32.length; i1++) {
-				Arg32[i1] = Arg32jsonlist.getItem(i1).castToInt();
-			}
-			Arg3[i2] = Arg32;
-		}
-		
-		int[][][] output = arrayTest(Arg1, Arg2, Arg3);
-		System.out.println(Unifiedstr.deepToString(output));
-	
-	}
+
+
+    public static int[][][] arrayTest(int[][][][] Arg1, int[][] Arg2, int[][] Arg3) {
+        //TODO
+        return new int[][][]{};
+    }
+    
+    
+    public static void main(String[] args) {
+        String input = new Scanner(System.in).nextLine();
+        JSONList argList = (JSONList) JSONParser.getObjectFromString(input);
+        JSONList Arg1jsonlist = (JSONList) argList.getItem(0);
+        int[][][][] Arg1 = new int[Arg1jsonlist.getEntryCount()][][][];
+        for (int i4 = 0; i4 < Arg1.length; i4++) {
+        	JSONList Arg14jsonlist = (JSONList) Arg1jsonlist.getItem(i4);
+        	int[][][] Arg14 = new int[Arg14jsonlist.getEntryCount()][][];
+        	for (int i3 = 0; i3 < Arg14.length; i3++) {
+        		JSONList Arg143jsonlist = (JSONList) Arg14jsonlist.getItem(i3);
+        		int[][] Arg143 = new int[Arg143jsonlist.getEntryCount()][];
+        		for (int i2 = 0; i2 < Arg143.length; i2++) {
+        			JSONList Arg1432jsonlist = (JSONList) Arg143jsonlist.getItem(i2);
+        			int[] Arg1432 = new int[Arg1432jsonlist.getEntryCount()];
+        			for (int i1 = 0; i1 < Arg1432.length; i1++) {
+        				Arg1432[i1] = Arg1432jsonlist.getItem(i1).castToInt();
+        			}
+        			Arg143[i2] = Arg1432;
+        		}
+        		Arg14[i3] = Arg143;
+        	}
+        	Arg1[i4] = Arg14;
+        }
+        JSONList Arg2jsonlist = (JSONList) argList.getItem(1);
+        int[][] Arg2 = new int[Arg2jsonlist.getEntryCount()][];
+        for (int i2 = 0; i2 < Arg2.length; i2++) {
+        	JSONList Arg22jsonlist = (JSONList) Arg2jsonlist.getItem(i2);
+        	int[] Arg22 = new int[Arg22jsonlist.getEntryCount()];
+        	for (int i1 = 0; i1 < Arg22.length; i1++) {
+        		Arg22[i1] = Arg22jsonlist.getItem(i1).castToInt();
+        	}
+        	Arg2[i2] = Arg22;
+        }
+        JSONList Arg3jsonlist = (JSONList) argList.getItem(2);
+        int[][] Arg3 = new int[Arg3jsonlist.getEntryCount()][];
+        for (int i2 = 0; i2 < Arg3.length; i2++) {
+        	JSONList Arg32jsonlist = (JSONList) Arg3jsonlist.getItem(i2);
+        	int[] Arg32 = new int[Arg32jsonlist.getEntryCount()];
+        	for (int i1 = 0; i1 < Arg32.length; i1++) {
+        		Arg32[i1] = Arg32jsonlist.getItem(i1).castToInt();
+        	}
+        	Arg3[i2] = Arg32;
+        }
+        int[][][] output = arrayTest(Arg1, Arg2, Arg3);
+        System.out.println(Unifiedstr.deepToString(output));
+    }
 }
 /*
  * jsonFASTParse

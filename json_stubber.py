@@ -4,14 +4,22 @@ class JSONStubber(object):
                   user_impl_header="", user_impl_footer=""):
 
         file_section = self.make_file_without_body(class_name)
+        file_section.header += "\n\n"
+
+        if user_impl_header:
+            user_impl_header += "\n"
+
+        if user_impl_footer:
+            user_impl_footer = "\n" + user_impl_footer
 
         userimpl_section = self.make_userimpl_section(method_name, return_type, arguments)
-        userimpl_section.header = user_impl_header + '\n' + userimpl_section.header
-        userimpl_section.footer += '\n' + user_impl_footer
+        userimpl_section.header = user_impl_header + userimpl_section.header
+        userimpl_section.footer += user_impl_footer
 
         main = self.make_main(return_type, method_name, arguments)
 
         file_section.append_child(userimpl_section)
+        file_section.append_child(TextStubSection(""))
         file_section.append_child(main)
 
         return file_section.make()
@@ -52,21 +60,24 @@ class JSONStubber(object):
 
 class StubSection(object):
 
-    def __init__(self, child_sections=None, header=None, footer=None, tabs=0):
+    def __init__(self, child_sections=None, header=None, footer=None, tabs=0, tabchar="    "):
         self.child_sections = child_sections or []
         self.header = header or ""
         self.footer = footer or ""
-        self.tabs = 0
+        self.tabs = tabs
+        self.tabchar = tabchar
 
     def append_child(self, child):
         self.child_sections.append(child)
 
     def make(self):
-        tabs = "\t" * self.tabs
-        children_str = "\n".join([child.make() for child in self.child_sections])
-        tabbed_children_str = "".join([tabs + "\t" + text for text in children_str.splitlines(True)])
+        tabs = self.tabchar * self.tabs
         tabbed_header_str = "".join([tabs + text for text in self.header.splitlines(True)])
         tabbed_footer_str = "".join([tabs + text for text in self.footer.splitlines(True)])
+
+        children_str = "\n".join([child.make() for child in self.child_sections])
+        child_tabs = self.tabchar * (self.tabs + 1)
+        tabbed_children_str = "".join([child_tabs + text for text in children_str.splitlines(True)])
         return "{}\n{}\n{}".format(tabbed_header_str, tabbed_children_str, tabbed_footer_str)
 
 class TextStubSection(object):
@@ -78,7 +89,12 @@ class TextStubSection(object):
         self.children.append(child)
 
     def make(self):
-        return self.text + "\n" + "\n".join([child.make() for child in self.children])
+        if self.children:
+            child_text = "\n" + "\n".join([child.make() for child in self.children])
+        else:
+            child_text = ""
+
+        return self.text + child_text
 
 class JSONType(object):
     types = {}

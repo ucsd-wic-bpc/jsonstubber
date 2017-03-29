@@ -17,10 +17,10 @@ class CppJSONStubber(JSONStubber):
     def make_file_without_body(self, class_name):
         include_lines, header_lines, body_lines = self.make_supportfile_lines()
         self.header_lines = header_lines
-        header = "".join(include_lines)
-        footer = "".join(body_lines)
+        header = "\n".join(include_lines)
+        footer = "\n".join(body_lines)
 
-        return StubSection(header=header, footer=footer)
+        return StubSection(header=header, footer=footer, tabs=-1)
 
     def get_hpp_header_lines(self, hpp_file, finished_deps=None):
         hpp_base_dir = os.path.dirname(hpp_file)
@@ -36,8 +36,9 @@ class CppJSONStubber(JSONStubber):
         with open(hpp_file, 'r') as f:
             line = f.readline()
             while line:
+                line = line.rstrip()
                 if line.startswith('#include "'):
-                    depend_header_file = line[len('#include "'):].strip()[:-1]
+                    depend_header_file = line[len('#include "'):][:-1]
                     depend_header_file = os.path.join(hpp_base_dir, depend_header_file)
                     includes, heads, deps = self.get_hpp_header_lines(depend_header_file, finished_deps)
                     header_lines = heads + header_lines
@@ -75,6 +76,7 @@ class CppJSONStubber(JSONStubber):
             with open(jsonfast_body, 'r') as f:
                 line = f.readline()
                 while line:
+                    line = line.rstrip()
                     if line.startswith("#include <"):
                         include_lines.add(line)
                     elif line.startswith('#include "'):
@@ -84,7 +86,7 @@ class CppJSONStubber(JSONStubber):
                         body_lines.append(line)
                     line = f.readline()
 
-        include_lines.add("#include <iostream>\n")
+        include_lines.add("#include <iostream>")
         return list(include_lines), header_lines, body_lines
 
     def get_default_return(self, stubtype):
@@ -141,7 +143,7 @@ class CppJSONStubber(JSONStubber):
         header = ""
         if isinstance(return_type, JSONContainer):
             return_type_str, return_struct_text = self.create_container_return_struct(return_type)
-            header += return_struct_text
+            header += return_struct_text + "\n"
         else:
             return_type_str = self.convert_to_language_type(return_type)
 
@@ -174,7 +176,7 @@ class CppJSONStubber(JSONStubber):
         header_lines.append("int main() {")
         footer = "}"
 
-        return StubSection(header="".join(header_lines), footer=footer)
+        return StubSection(header="\n".join(header_lines), footer=footer)
 
     def make_parse_input(self):
         lines = [

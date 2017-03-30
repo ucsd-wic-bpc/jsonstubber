@@ -1,4 +1,4 @@
-from json_stubber import (
+from .json_stubber import (
     JSONStubber, StubSection, TextStubSection, JSONTypes, JSONContainer
 )
 

@@ -7,24 +7,21 @@ import java.util.Scanner;
 
 public class Problem1 {
 
-	
-	public static int potateAndRoll(int hello) {
-		//TODO
-		return 0;
-	
-	}
-	
-	
-	public static void main(String[] args) {
-		String input = new Scanner(System.in).nextLine();
-		JSONList argList = (JSONList) JSONParser.getObjectFromString(input);
-		
-		int hello = argList.getItem(0).castToInt();
-		
-		int output = potateAndRoll(hello);
-		System.out.println(Unifiedstr.toString(output));
-	
-	}
+
+
+    public static int potateAndRoll(int hello) {
+        //TODO
+        return 0;
+    }
+    
+    
+    public static void main(String[] args) {
+        String input = new Scanner(System.in).nextLine();
+        JSONList argList = (JSONList) JSONParser.getObjectFromString(input);
+        int hello = argList.getItem(0).castToInt();
+        int output = potateAndRoll(hello);
+        System.out.println(Unifiedstr.toString(output));
+    }
 }
 /*
  * jsonFASTParse
@@ -271,3 +268,4 @@ class Unifiedstr {
     return buf.toString();
   }
 }
+

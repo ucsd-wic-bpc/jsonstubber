@@ -11,22 +11,10 @@
 #include <stdexcept>
 
 
-struct result {
-int dimension1Length;
-int dimension2Length;
-int dimension3Length;
-int*** array;
-};
-
-result arrayTest(int**** Arg1, int Arg1Dimension1Length, int Arg1Dimension2Length, int Arg1Dimension3Length, int Arg1Dimension4Length, int** Arg2, int Arg2Dimension1Length, int Arg2Dimension2Length, int** Arg3, int Arg3Dimension1Length, int Arg3Dimension2Length) {
+int potateAndRoll(int hello) {
 
     //TODO
-    result method_result;
-    method_result.dimension1Length = 0;
-    method_result.dimension2Length = 0;
-    method_result.dimension3Length = 0;
-    method_result.array = NULL;
-    return method_result;
+    return 0;
 }
 
 #ifndef JSON_OBJECT_HPP
@@ -180,56 +168,9 @@ int main() {
     std::string inputContents;
     getline(std::cin, inputContents);
     JSONList* argList = (JSONList*) JSONParser::get_obj_from_str(inputContents);
-    JSONList* Arg1_dim4jsonlist = NULL;
-    JSONList* Arg1_dim3jsonlist = NULL;
-    JSONList* Arg1_dim2jsonlist = NULL;
-    JSONList* Arg1jsonlist = NULL;
-    Arg1jsonlist = (JSONList*) argList->get_item(0);
-    int**** Arg1 = new int***[Arg1jsonlist->get_entry_count()];
-    for (int i4 = 0; i4 < Arg1jsonlist->get_entry_count(); i4++) {
-    Arg1_dim4jsonlist = (JSONList*) Arg1jsonlist->get_item(i4);
-    int*** Arg1_dim4 = new int**[Arg1_dim4jsonlist->get_entry_count()];
-    for (int i3 = 0; i3 < Arg1_dim4jsonlist->get_entry_count(); i3++) {
-    Arg1_dim3jsonlist = (JSONList*) Arg1_dim4jsonlist->get_item(i3);
-    int** Arg1_dim3 = new int*[Arg1_dim3jsonlist->get_entry_count()];
-    for (int i2 = 0; i2 < Arg1_dim3jsonlist->get_entry_count(); i2++) {
-    Arg1_dim2jsonlist = (JSONList*) Arg1_dim3jsonlist->get_item(i2);
-    int* Arg1_dim2 = new int[Arg1_dim2jsonlist->get_entry_count()];
-    for (int i1 = 0; i1 < Arg1_dim2jsonlist->get_entry_count(); i1++) {
-    Arg1_dim2[i1] = Arg1_dim2jsonlist->get_item(i1)->cast_data<int>();
-    }
-    Arg1_dim3[i2] = Arg1_dim2;
-    }
-    Arg1_dim4[i3] = Arg1_dim3;
-    }
-    Arg1[i4] = Arg1_dim4;
-    }
-    JSONList* Arg2_dim2jsonlist = NULL;
-    JSONList* Arg2jsonlist = NULL;
-    Arg2jsonlist = (JSONList*) argList->get_item(1);
-    int** Arg2 = new int*[Arg2jsonlist->get_entry_count()];
-    for (int i2 = 0; i2 < Arg2jsonlist->get_entry_count(); i2++) {
-    Arg2_dim2jsonlist = (JSONList*) Arg2jsonlist->get_item(i2);
-    int* Arg2_dim2 = new int[Arg2_dim2jsonlist->get_entry_count()];
-    for (int i1 = 0; i1 < Arg2_dim2jsonlist->get_entry_count(); i1++) {
-    Arg2_dim2[i1] = Arg2_dim2jsonlist->get_item(i1)->cast_data<int>();
-    }
-    Arg2[i2] = Arg2_dim2;
-    }
-    JSONList* Arg3_dim2jsonlist = NULL;
-    JSONList* Arg3jsonlist = NULL;
-    Arg3jsonlist = (JSONList*) argList->get_item(2);
-    int** Arg3 = new int*[Arg3jsonlist->get_entry_count()];
-    for (int i2 = 0; i2 < Arg3jsonlist->get_entry_count(); i2++) {
-    Arg3_dim2jsonlist = (JSONList*) Arg3jsonlist->get_item(i2);
-    int* Arg3_dim2 = new int[Arg3_dim2jsonlist->get_entry_count()];
-    for (int i1 = 0; i1 < Arg3_dim2jsonlist->get_entry_count(); i1++) {
-    Arg3_dim2[i1] = Arg3_dim2jsonlist->get_item(i1)->cast_data<int>();
-    }
-    Arg3[i2] = Arg3_dim2;
-    }
-    struct result output = arrayTest(Arg1, Arg1jsonlist->get_entry_count(), Arg1_dim2jsonlist->get_entry_count(), Arg1_dim3jsonlist->get_entry_count(), Arg1_dim4jsonlist->get_entry_count(), Arg2, Arg2jsonlist->get_entry_count(), Arg2_dim2jsonlist->get_entry_count(), Arg3, Arg3jsonlist->get_entry_count(), Arg3_dim2jsonlist->get_entry_count());
-    std::cout << Unifiedstr::deep_to_string<int>((void*)output.array, 3, output.dimension1Length, output.dimension2Length, output.dimension3Length) << std::endl;
+    int hello = argList->get_item(0)->cast_data<int>();
+    int output = potateAndRoll(hello);
+    std::cout << Unifiedstr::to_string(output) << std::endl;
 }
 
 JSONList::JSONList(std::string data) {

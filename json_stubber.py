@@ -5,6 +5,7 @@ class JSONStubber(object):
 
         file_section = self.make_file_without_body(class_name)
         file_section.header += "\n\n"
+        file_section.footer += "\n"
 
         if user_impl_header:
             user_impl_header += "\n"

@@ -51,6 +51,7 @@ class JavaJSONStubber(JSONStubber):
             if stubtype == JSONTypes.FLOAT: return "0.0"
             if stubtype == JSONTypes.STRING: return '""'
             if stubtype == JSONTypes.CHAR: return "'\0'"
+            if stubtype == JSONTypes.BOOL: return "false"
 
 
     def convert_to_language_type(self, stubtype):
@@ -61,6 +62,7 @@ class JavaJSONStubber(JSONStubber):
             if stubtype == JSONTypes.FLOAT: return "double"
             if stubtype == JSONTypes.STRING: return "String"
             if stubtype == JSONTypes.CHAR: return "char"
+            if stubtype == JSONTypes.BOOL: return "boolean"
 
     def make_userimpl_section(self, method_name, return_type, arguments):
         lang_ret_type = self.convert_to_language_type(return_type)

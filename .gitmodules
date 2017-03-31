@@ -4,3 +4,6 @@
 [submodule "unifiedstr"]
 	path = unifiedstr
 	url = https://github.com/ucsd-wic-bpc/unifiedstr
+[submodule "pyjsontypes"]
+	path = pyjsontypes
+	url = https://github.com/ucsd-wic-bpc/pyjsontypes

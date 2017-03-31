@@ -1,4 +1,4 @@
-from ..json_stubber import JSONTypes, JSONContainer
+from ..pyjsontypes.jsontypes import JSONTypes, JSONContainer
 from ..java_stubber import JavaJSONStubber
 from ..cpp_stubber import CppJSONStubber
 from ..python_stubber import PythonJSONStubber

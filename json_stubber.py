@@ -96,35 +96,3 @@ class TextStubSection(object):
             child_text = ""
 
         return self.text + child_text
-
-class JSONType(object):
-    types = {}
-
-    def __init__(self, description):
-        self.description = description
-        JSONType.types[description] = self
-
-    def __eq__(self, other):
-        return self.description == other.description
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-    @classmethod
-    def parse(cls, s):
-        return cls.types[s]
-
-
-class JSONTypes:
-    INT = JSONType("int")
-    FLOAT = JSONType("float")
-    STRING = JSONType("str")
-    CHAR = JSONType("char")
-    BOOL = JSONType("bool")
-
-
-class JSONContainer(JSONType):
-    def __init__(self, subtype):
-        self.subtype = subtype
-        self.degree = 1 + (subtype.degree if isinstance(subtype, JSONContainer) else 0)
-        super(JSONContainer, self).__init__('list_' + subtype.description)

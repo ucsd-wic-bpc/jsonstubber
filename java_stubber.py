@@ -1,4 +1,5 @@
-from .json_stubber import JSONStubber, StubSection, TextStubSection, JSONTypes, JSONType, JSONContainer
+from .json_stubber import JSONStubber, StubSection, TextStubSection
+from .pyjsontypes.jsontypes import JSONTypes, JSONContainer
 import glob
 import os
 

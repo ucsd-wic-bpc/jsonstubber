@@ -78,8 +78,4 @@ class PythonJSONStubber(JSONStubber):
         return "# {}".format(text)
 
     def make_multiline_comment(self, lines):
-        commented_lines = ['"""']
-        commented_lines.extend(lines)
-        commented_lines.append('"""')
-
-        return "\n".join(commented_lines)
+        return "\n".join([self.make_singleline_comment(line) for line in lines])

@@ -73,3 +73,13 @@ class PythonJSONStubber(JSONStubber):
         print_str = "print(output)"
 
         return TextStubSection("{}\n{}".format(output_str, print_str))
+
+    def make_singleline_comment(self, text):
+        return "# {}".format(text)
+
+    def make_multiline_comment(self, lines):
+        commented_lines = ['"""']
+        commented_lines.extend(lines)
+        commented_lines.append('"""')
+
+        return "\n".join(commented_lines)

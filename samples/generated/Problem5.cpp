@@ -1,14 +1,14 @@
-#include <cstdarg>
-#include <map>
 #include <utility>
-#include <stack>
-#include <string>
-#include <sstream>
+#include <vector>
 #include <iostream>
+#include <cstdarg>
+#include <sstream>
+#include <stdexcept>
+#include <stack>
 #include <iomanip>
 #include <cstdlib>
-#include <vector>
-#include <stdexcept>
+#include <map>
+#include <string>
 
 
 struct result {
@@ -289,6 +289,16 @@ void JSONList::populate_entries_from_string(std::string str) {
   }
 }
 
+JSONObject* JSONParser::get_obj_from_str(std::string str) {
+    // Check if surrounded by quotes, list brackets, or nothing
+    if (str[0] == '[' && str[str.length() - 1] == ']')
+      return new JSONList(str.substr(1, str.length() - 2));
+    else if (str[0] == '"' && str[str.length() - 1] == '"')
+      return new JSONObject(str.substr(1, str.length() - 2));
+    else
+      return new JSONObject(str);
+}
+
 JSONObject::JSONObject() {
   this->data = "";
 }
@@ -305,14 +315,4 @@ std::pair<T*, int> JSONObject::cast_to_list() {
   for (int ii = 0; ii < len; ii++)
     arr[ii] = thisList->get_item(ii)->cast_data<T>();
   return std::make_pair(arr, len);
-}
-
-JSONObject* JSONParser::get_obj_from_str(std::string str) {
-    // Check if surrounded by quotes, list brackets, or nothing
-    if (str[0] == '[' && str[str.length() - 1] == ']')
-      return new JSONList(str.substr(1, str.length() - 2));
-    else if (str[0] == '"' && str[str.length() - 1] == '"')
-      return new JSONObject(str.substr(1, str.length() - 2));
-    else
-      return new JSONObject(str);
 }

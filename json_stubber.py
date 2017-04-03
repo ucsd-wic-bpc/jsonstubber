@@ -43,6 +43,18 @@ class JSONStubber(object):
 
         return main
 
+    def make_comment_string(self, comment_text):
+        if isinstance(comment_text, list):
+            return self.make_multiline_comment(comment_text)
+        else:
+            return self.make_singleline_comment(comment_text)
+
+    def make_singleline_comment(self, text):
+        pass
+
+    def make_multiline_comment(self, line_list):
+        pass
+
     def make_main_without_body(self):
         pass
 

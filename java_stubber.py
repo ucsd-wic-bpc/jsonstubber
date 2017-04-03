@@ -159,3 +159,13 @@ class JavaJSONStubber(JSONStubber):
             lines.append("System.out.println(Unifiedstr.toString(output));");
 
         return TextStubSection("\n".join(lines))
+
+    def make_singleline_comment(self, text):
+        return "// {}".format(text)
+
+    def make_multiline_comment(self, lines):
+        commented_lines = ["/*"]
+        commented_lines.extend(["* {}".format(line) for line in lines])
+        commented_lines.append("*/")
+
+        return "\n".join(commented_lines)
